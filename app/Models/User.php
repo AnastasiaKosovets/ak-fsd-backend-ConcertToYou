@@ -48,4 +48,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $table = 'users';
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function group(){
+        return $this->hasOne(Group::class, 'user_id', 'id');
+    }
 }
