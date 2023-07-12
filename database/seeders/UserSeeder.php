@@ -48,6 +48,17 @@ class UserSeeder extends Seeder
                 'role_id' => 2
             ],
             [ 
+                'firstName' => 'Coral',
+                'lastName' => 'Jimenez',
+                'email' => 'coral@coral.com',
+                'password' => bcrypt('Judit1234'),
+                'address' => 'Plaza Principal 15, Paterna 46120',
+                'document' => '12345345C',
+                'dateOfBirth' => '28/10/1991',
+                'phoneNumber' => '689123214',
+                'role_id' => 2
+            ],
+            [ 
                 'firstName' => 'Anastasia',
                 'lastName' => 'Kosovets',
                 'email' => 'anastasia@anastasia.com',

@@ -24,6 +24,10 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class
         ]);
         
+        $this->call([
+            ConcertSeeder::class
+        ]);
+
         \App\Models\User::factory(10)->create();
     }
 }

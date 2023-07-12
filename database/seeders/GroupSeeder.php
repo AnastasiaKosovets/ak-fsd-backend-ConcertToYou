@@ -38,6 +38,16 @@ class GroupSeeder extends Seeder
                 en flauta, oboe, clarinete y fagot, creando juntos una combinación de sonidos ricos y envolventes.',
                 'musicsNumber' => 4
             ],
+            [
+                'user_id' => 4,
+                'groupName' => 'Jazz Quartet Fusion',
+                'description' => 'Permítanos presentarles al Jazz Quartet Fusion, un grupo musical que combina la improvisación 
+                del jazz con elementos de otros géneros musicales. Nuestro cuarteto está compuesto por músicos talentosos y apasionados 
+                en piano, saxofón, contrabajo y batería, creando juntos un sonido único y envolvente. Sumérgete en la rica historia del 
+                jazz mientras exploramos diversos estilos, desde el swing clásico hasta el jazz contemporáneo y la fusión. Nuestras interpretaciones 
+                están llenas de ritmo, armonía sofisticada y solos vibrantes, que te transportarán a un viaje musical emocionante.',
+                'musicsNumber' => 4
+            ],
         ]);
     }
 }
