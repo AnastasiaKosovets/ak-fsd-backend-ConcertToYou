@@ -8,23 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     use HasFactory;
-    // user_id');
-    //         $table->foreign('user_id')->references('id')->on('roles');
-    //         $table->string('groupName');
-    //         $table->string('description');
-    //         $table->integer('musicsNumber');
 
     protected $fillable = [
         'user_id',
         'groupName',
         'genre',
         'description',
-        'musicsNumber'
+        'musicsNumber',
+
     ];
     protected $casts = [
         'date' => 'datetime'
     ];
 
+    public $timestamps = false;
+    
     protected $table = 'groups';
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
