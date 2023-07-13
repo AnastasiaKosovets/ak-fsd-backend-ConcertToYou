@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -171,6 +172,25 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'Error getting profile'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            $headerToken = $request->bearerToken();
+            $token = PersonalAccessToken::findToken($headerToken);
+            $token->delete();
+
+            return response()->json([
+                'message' => 'Usuario deslogueado'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error deslogueando usuario' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deslogueando usuario'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
