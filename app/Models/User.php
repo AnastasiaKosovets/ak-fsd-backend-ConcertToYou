@@ -26,7 +26,7 @@ class User extends Authenticatable
         'address',
         'document',
         'dateOfBirth',
-        'telefonNumber',
+        'phoneNumber',
         'role_id'
     ];
 

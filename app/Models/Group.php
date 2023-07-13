@@ -17,7 +17,7 @@ class Group extends Model
     protected $fillable = [
         'user_id',
         'groupName',
-        'groupName',
+        'genre',
         'description',
         'musicsNumber'
     ];
