@@ -16,10 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            // UserSeeder::class,
-            // GroupSeeder::class,
-            // ConcertSeeder::class,
-            // UserConcertFavoriteSeeder::class
         ]);
         
         $this->call([
@@ -36,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            UserConcertFavoriteSeeder::class
+            BookingSeeder::class
         ]);
 
     }

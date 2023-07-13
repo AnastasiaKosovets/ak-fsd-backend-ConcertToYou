@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_concert_favorite', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('concert_id');
             $table->foreign('concert_id')->references('id')->on('concerts');
+            $table->boolean('confirmation')->default(false);
+            $table->boolean('favorite')->default(false);
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
-        Schema::dropIfExists('user_concert_favorite');
+        Schema::dropIfExists('bookings');
     }
 };
