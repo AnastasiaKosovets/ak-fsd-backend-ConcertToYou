@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\UserConcertFavorite;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,12 +15,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleSeeder::class
+            RoleSeeder::class,
+            // UserSeeder::class,
+            // GroupSeeder::class,
+            // ConcertSeeder::class,
+            // UserConcertFavoriteSeeder::class
         ]);
-
+        
         $this->call([
             UserSeeder::class
         ]);
+        \App\Models\User::factory(10)->create();
 
         $this->call([
             GroupSeeder::class
@@ -28,6 +35,9 @@ class DatabaseSeeder extends Seeder
             ConcertSeeder::class
         ]);
 
-        \App\Models\User::factory(10)->create();
+        $this->call([
+            UserConcertFavoriteSeeder::class
+        ]);
+
     }
 }
