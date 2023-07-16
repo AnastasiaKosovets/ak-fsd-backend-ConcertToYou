@@ -96,7 +96,7 @@ class ConcertSeeder extends Seeder
                 'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img23.jpg',
                 'title' => 'Noche de Bossa Nova',
                 'date' => '2023-11-15 20:30:00',
-                'groupName' => 'Cuarteto de Viento Harmonía',
+                'groupName' => 'Quinteto de Viento Harmonía',
                 'description' => 'Viaja a las playas de Brasil con los ritmos suaves y sensuales de la Bossa Nova',
                 'programm' => '1. Jobim - Garota de Ipanema,
                                 2. Bonfá - Manhã de Carnaval,
