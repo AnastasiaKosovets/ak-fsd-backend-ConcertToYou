@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +13,7 @@ Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:san
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // USERS CONTROLLER
-
+Route::get('/users', [UserController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
 
 
 
