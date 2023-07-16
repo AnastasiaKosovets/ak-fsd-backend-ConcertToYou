@@ -11,8 +11,8 @@ class Concert extends Model
 
     protected $fillable = [
         'group_id',
-        'title',
         'image',
+        'title',
         'date',
         'groupName',
         'description'

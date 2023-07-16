@@ -16,6 +16,7 @@ class ConcertSeeder extends Seeder
         DB::table('concerts')->insert([
             [
                 'group_id' => 2,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img15.jpg',
                 'title' => 'Con la luz de la luna',
                 'date' => '2023-08-15 18:00:00',
                 'groupName' => 'Duo Melodía',
@@ -25,20 +26,11 @@ class ConcertSeeder extends Seeder
                                 3. Sonata para Violín Nº18 en Sol Mayor, K 301/293'
             ],
             [
-                'group_id' => 2,
-                'title' => 'Concierto Primaveral',
-                'date' => '2023-09-10 19:30:00',
-                'groupName' => 'Cuarteto de Cuerdas Armonía',
-                'description' => 'Disfruta de una velada musical con nuestro cuarteto de cuerdas bajo el tema de la primavera',
-                'programm' => '1. Vivaldi - Las Cuatro Estaciones: Primavera,
-                                2. Haydn - Cuarteto de Cuerdas en Do Mayor Op. 76, No. 3 "Emperador",
-                                3. Tchaikovsky - Serenata para Cuerdas en Do Mayor Op. 48'
-            ],
-            [
                 'group_id' => 1,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img22.jpg',
                 'title' => 'Noche de Jazz',
                 'date' => '2023-09-15 20:00:00',
-                'groupName' => 'Cuarteto de Viento Harmonía',
+                'groupName' => 'Quinteto de Viento Harmonía',
                 'description' => 'Déjate llevar por el ritmo y la improvisación del jazz con nuestro cuarteto de viento',
                 'programm' => '1. Gershwin - Summertime,
                                 2. Davis - So What,
@@ -46,6 +38,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 3,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img5.jpg',
                 'title' => 'Noche de Ópera',
                 'date' => '2023-09-20 19:00:00',
                 'groupName' => 'Cuarteto Forte',
@@ -56,6 +49,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img25.jpg',
                 'title' => 'Concierto de Otoño',
                 'date' => '2023-09-25 18:30:00',
                 'groupName' => 'Duo Melodía',
@@ -66,16 +60,18 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 1,
-                'title' => 'Concierto de Música Barroca',
-                'date' => '2023-10-05 19:30:00',
-                'groupName' => 'Cuarteto de Viento Harmonía',
-                'description' => 'Viaja en el tiempo con nuestra interpretación de la música barroca de compositores como Bach y Handel',
-                'programm' => '1. Bach - Suite Orquestal No. 3: Air,
-                                2. Vivaldi - Concierto para Flauta en Re Mayor "Il Gardellino",
-                                3. Handel - Música Acuática: Allegro'
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img24.jpg',
+                'title' => 'Jazz al Atardecer',
+                'date' => '2023-10-20 18:30:00',
+                'groupName' => 'Quinteto de Viento JazzWind',
+                'description' => 'Disfruta de una velada de jazz con nuestro quinteto de viento en un entorno al aire libre',
+                'programm' => '1. Parker - Ornithology,
+                                2. Coltrane - Blue Train,
+                                3. Monk - Round Midnight'
             ],
             [
                 'group_id' => 3,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img10.jpg',
                 'title' => 'Noche de Tango',
                 'date' => '2023-10-10 20:00:00',
                 'groupName' => 'Cuarteto Forte',
@@ -86,6 +82,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img26.jpg',
                 'title' => 'Concierto de Invierno',
                 'date' => '2023-11-05 19:00:00',
                 'groupName' => 'Duo Melodía',
@@ -96,6 +93,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 1,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img23.jpg',
                 'title' => 'Noche de Bossa Nova',
                 'date' => '2023-11-15 20:30:00',
                 'groupName' => 'Cuarteto de Viento Harmonía',
@@ -106,6 +104,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 3,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img19.jpg',
                 'title' => 'Noche de Música Romántica',
                 'date' => '2023-11-20 19:00:00',
                 'groupName' => 'Cuarteto Forte',
@@ -116,6 +115,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img27.jpg',
                 'title' => 'Concierto de Navidad',
                 'date' => '2023-12-10 18:00:00',
                 'groupName' => 'Duo Melodía',
@@ -126,6 +126,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 4,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img28.jpg',
                 'title' => 'Jazz Night: Tributo a los Grandes',
                 'date' => '2023-09-15 20:00:00',
                 'groupName' => 'Jazz Quartet Fusion',
@@ -134,6 +135,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 4,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img29.jpg',
                 'title' => 'Jazz Under the Stars',
                 'date' => '2023-09-30 19:30:00',
                 'groupName' => 'Jazz Quartet Fusion',
@@ -142,6 +144,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 4,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img32.jpg',
                 'title' => 'Jazz Fusion Night',
                 'date' => '2023-10-12 21:00:00',
                 'groupName' => 'Jazz Quartet Fusion',
@@ -150,6 +153,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 4,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img31.jpg',
                 'title' => 'Jazz in the City',
                 'date' => '2023-11-08 19:00:00',
                 'groupName' => 'Jazz Quartet Fusion',
@@ -158,28 +162,13 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 4,
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img33.jpg',
                 'title' => 'Jazz Christmas Jam',
                 'date' => '2023-12-10 18:00:00',
                 'groupName' => 'Jazz Quartet Fusion',
                 'description' => 'Celebra la temporada navideña con nuestra música en este concierto lleno de espíritu festivo',
                 'programm' => 'Bach - Aleluya (de El Mesías), Tchaikovsky - Danza del Hada de Azúcar (de El Cascanueces), Gruber - Noche de Paz'
             ]
-            
-            
-            
-            
-            
-
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            ]);
+        ]);
     }
 }
