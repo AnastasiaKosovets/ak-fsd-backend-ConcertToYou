@@ -179,6 +179,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
+            
             $headerToken = $request->bearerToken();
             $token = PersonalAccessToken::findToken($headerToken);
             $token->delete();

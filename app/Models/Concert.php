@@ -12,10 +12,10 @@ class Concert extends Model
     protected $fillable = [
         'group_id',
         'title',
+        'image',
         'date',
         'groupName',
-        'description',
-        'programm'
+        'description'
     ];
     protected $casts = [
         'date' => 'datetime'

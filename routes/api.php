@@ -9,7 +9,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerGroup', [AuthController::class, 'registerGroup'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
-Route::post('/logout/{id}', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
 
