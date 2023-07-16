@@ -20,6 +20,7 @@ Route::get('/groups', [AdminController::class, 'getAllGroups'])->middleware('aut
 
 // USERS CONTROLLER
 Route::get('/groupView', [UserController::class, 'viewAllGroups']);
+Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 
 
 

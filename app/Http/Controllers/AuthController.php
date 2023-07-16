@@ -102,7 +102,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'Group registrado',
-                'date' => $newGroup,
+                'data' => $newGroup,
             ]);
         } catch (\Throwable $th) {
             Log::error('Error getting group' . $th->getMessage());
@@ -179,7 +179,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            
+
             $headerToken = $request->bearerToken();
             $token = PersonalAccessToken::findToken($headerToken);
             $token->delete();
