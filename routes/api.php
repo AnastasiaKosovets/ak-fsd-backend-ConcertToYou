@@ -14,8 +14,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 // USERS CONTROLLER
 Route::get('/users', [UserController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
-
-
+Route::delete('/users/{id}', [UserController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
 
 
 
