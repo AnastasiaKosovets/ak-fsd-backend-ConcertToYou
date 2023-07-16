@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-// USERS CONTROLLER
-Route::get('/users', [UserController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
-Route::delete('/users/{id}', [UserController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
-Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
+// ADMIN CONTROLLER
+Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
+Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::get('/groups', [AdminController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
 
+// USERS CONTROLLER
+Route::get('/groupView', [UserController::class, 'viewAllGroups']);
 
 
 

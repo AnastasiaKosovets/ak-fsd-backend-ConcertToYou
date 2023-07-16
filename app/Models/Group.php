@@ -17,6 +17,7 @@ class Group extends Model
         'musicsNumber',
 
     ];
+    
     protected $casts = [
         'date' => 'datetime'
     ];
