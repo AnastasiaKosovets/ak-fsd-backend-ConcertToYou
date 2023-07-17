@@ -13,15 +13,15 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-// ADMIN CONTROLLER
-Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
-Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
-Route::get('/groups', [AdminController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
-
 // USERS CONTROLLER
 Route::get('/groupView', [UserController::class, 'viewAllGroups']);
 Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
+Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 
+// ADMIN CONTROLLER
+Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
+Route::get('/groups', [AdminController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
+Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

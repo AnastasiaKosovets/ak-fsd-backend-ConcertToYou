@@ -53,4 +53,23 @@ class UserController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function deleteMyAccount(){
+        
+        try {
+            $user = auth()->user();
+            $userFound = User::find($user->id);
+            $userFound->delete();
+
+            return response()->json([
+                'message' => 'Delete profile ok'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error deleting user' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deleting user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
