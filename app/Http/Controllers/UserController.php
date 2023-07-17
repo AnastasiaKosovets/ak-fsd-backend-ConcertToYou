@@ -126,7 +126,7 @@ class UserController extends Controller
             $userFound->delete();
 
             return response()->json([
-                'message' => 'Delete profile ok'
+                'message' => 'DProfile deleted'
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error deleting user' . $th->getMessage());
