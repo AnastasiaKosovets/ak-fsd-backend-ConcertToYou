@@ -7,11 +7,72 @@ use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    public function profile()
+    {
+        try {
+            $user = auth()->user();
+
+            return response()->json([
+                'message' => 'Perfil recuperado',
+                'data' => $user,
+                'success' => true
+            ], Response::HTTP_FORBIDDEN);
+        } catch (\Throwable $th) {
+            Log::error('Error getting tasks' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error getting profile'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updateMyProfile(Request $request, $id)
+    {
+        try {
+            $user = auth()->user();
+            $id = $user->id;
+            
+            $validator = Validator::make($request->all(), [
+                'email' => 'nullable|string',
+                'address' => 'nullable|string',
+                'phoneNumber' => 'nullable|integer',
+                'role_id' => 'nullable'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), Response::HTTP_BAD_REQUEST);
+            }
+
+            $validData = $validator->validated();
+
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(['message' => "User with id {$id} not found"], Response::HTTP_NOT_FOUND);
+            }
+
+            $user->update($validData);
+
+            return response()->json([
+                'message' => 'User updated successfully',
+                'data' => $user,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error updating user: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function viewAllGroups()
     {
         try {
@@ -33,9 +94,9 @@ class UserController extends Controller
     public function getOneGroup($group_id)
     {
         try {
-            $group = Group::select('id','groupName','genre','description','musicsNumber')->where('id', $group_id)->first();
-            
-            if(!$group){
+            $group = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->where('id', $group_id)->first();
+
+            if (!$group) {
                 return response()->json([
                     'message' => 'Group not found'
                 ], Response::HTTP_NOT_FOUND);
@@ -56,8 +117,9 @@ class UserController extends Controller
         }
     }
 
-    public function deleteMyAccount(){
-        
+    public function deleteMyAccount()
+    {
+
         try {
             $user = auth()->user();
             $userFound = User::find($user->id);
@@ -75,7 +137,8 @@ class UserController extends Controller
         }
     }
 
-    public function confirmTicket(Request $request){
+    public function confirmTicket(Request $request)
+    {
         try {
             $user_id = auth()->user()->id;
             $concert_id = $request->input('concert_id');
@@ -85,7 +148,7 @@ class UserController extends Controller
             $booking->confirmation = true;
             $reservation_code = Str::random(10);
 
-            while (Booking::where('reservation_code', $reservation_code)->exists()){
+            while (Booking::where('reservation_code', $reservation_code)->exists()) {
                 $reservation_code = Str::random(10);
             }
 
@@ -99,7 +162,34 @@ class UserController extends Controller
                 'data' => $booking,
                 'success' => true
             ]);
+        } catch (\Throwable $th) {
+            Log::error('Error booking your ticket: ' . $th->getMessage());
 
+            return response()->json([
+                'message' => 'Error booking your ticket'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getMyTickets()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $bookings = Booking::where('user_id', $user_id)->get();
+
+            if ($bookings->isEmpty()) {
+                return response()->json([
+                    'message' => 'No reservation found'
+                ]);
+            }
+
+            $bookings->load('concert:id,title,date,groupName', 'user:id,firstName,lastName');
+
+            return response()->json([
+                'message' => 'Reservations retrieved',
+                'data' => $bookings,
+                'success' => true
+            ]);
         } catch (\Throwable $th) {
             Log::error('Error booking your ticket: ' . $th->getMessage());
 

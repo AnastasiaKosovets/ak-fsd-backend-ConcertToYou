@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerGroup', [AuthController::class, 'registerGroup'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // USERS CONTROLLER
+Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
+Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
 Route::get('/groupView', [UserController::class, 'viewAllGroups']);
 Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
+Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');;
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
 
