@@ -158,23 +158,23 @@ class AuthController extends Controller
         }
     }
 
-    public function profile(){
-        try {
-            $user = auth()->user();
+    // public function profile(){
+    //     try {
+    //         $user = auth()->user();
 
-            return response()->json([
-                'message' => 'Perfil recuperado',
-                'data' => $user,
-                'success' => true
-            ], Response::HTTP_FORBIDDEN);
-        } catch (\Throwable $th) {
-            Log::error('Error getting tasks' . $th->getMessage());
+    //         return response()->json([
+    //             'message' => 'Perfil recuperado',
+    //             'data' => $user,
+    //             'success' => true
+    //         ], Response::HTTP_FORBIDDEN);
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error getting tasks' . $th->getMessage());
 
-            return response()->json([
-                'message' => 'Error getting profile'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
+    //         return response()->json([
+    //             'message' => 'Error getting profile'
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     public function logout(Request $request)
     {

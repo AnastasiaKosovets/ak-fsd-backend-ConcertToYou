@@ -91,6 +91,24 @@ class UserController extends Controller
     //     }
     // }
 
+    public function getAllGroups()
+    {
+        try {
+            $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            return response()->json([
+                'message' => 'Groups retrieved',
+                'data' => $groups,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     public function getOneGroup($group_id)
     {
         try {
