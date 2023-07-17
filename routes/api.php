@@ -17,6 +17,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::get('/groupView', [UserController::class, 'viewAllGroups']);
 Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
+Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
+
 
 // ADMIN CONTROLLER
 Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');

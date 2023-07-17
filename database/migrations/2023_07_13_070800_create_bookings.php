@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('concert_id');
             $table->foreign('concert_id')->references('id')->on('concerts');
             $table->boolean('confirmation')->default(false);
+            $table->string('reservation_code')->nullable();
             $table->boolean('favorite')->default(false);
+            $table->timestamps();
         });
     }
     

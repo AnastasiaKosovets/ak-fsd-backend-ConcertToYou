@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -69,6 +71,40 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'Error deleting user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function confirmTicket(Request $request){
+        try {
+            $user_id = auth()->user()->id;
+            $concert_id = $request->input('concert_id');
+            $booking = new Booking();
+            $booking->user_id = $user_id;
+            $booking->concert_id = $concert_id;
+            $booking->confirmation = true;
+            $reservation_code = Str::random(10);
+
+            while (Booking::where('reservation_code', $reservation_code)->exists()){
+                $reservation_code = Str::random(10);
+            }
+
+            $booking->reservation_code = $reservation_code;
+            $booking->save();
+
+            $booking->load('concert:id,title,date,groupName,description,programm', 'user:id,firstName,lastName');
+
+            return response()->json([
+                'message' => 'Book ticket done',
+                'data' => $booking,
+                'success' => true
+            ]);
+
+        } catch (\Throwable $th) {
+            Log::error('Error booking your ticket: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error booking your ticket'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
