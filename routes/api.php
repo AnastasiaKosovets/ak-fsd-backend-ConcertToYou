@@ -28,7 +28,12 @@ Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth
 Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
 Route::delete('/group/{id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/group/{id}', [AdminController::class, 'restoreGroup'])->middleware('auth:sanctum', 'isAdmin');
+// Search by ID
+Route::get('/user/{id}', [AdminController::class, 'getOneUser'])->middleware('auth:sanctum', 'isAdmin');
+// Search by Name and Surname
+Route::get('/user', [AdminController::class, 'getOneUser'])->middleware('auth:sanctum', 'isAdmin');
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
+
+
+

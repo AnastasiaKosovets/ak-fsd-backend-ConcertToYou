@@ -28,6 +28,38 @@ class AdminController extends Controller
         }
     }
 
+    public function getOneUser(Request $request)
+{
+    try {
+        $firstName = $request->input('firstName');
+        $lastName = $request->input('lastName');
+
+        $query = User::query();
+
+        if ($firstName) {
+            $query->where('firstName', 'LIKE', "%{$firstName}%");
+        }
+
+        if ($lastName) {
+            $query->where('lastName', 'LIKE', "%{$lastName}%");
+        }
+
+        $user = $query->firstOrFail();
+
+        return response()->json([
+            'message' => 'User retrieved',
+            'data' => $user,
+            'success' => true
+        ], Response::HTTP_OK);
+    } catch (\Throwable $th) {
+        Log::error('Error getting user: ' . $th->getMessage());
+
+        return response()->json([
+            'message' => 'Error retrieving user'
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+
     public function getAllGroups()
     {
         try {
@@ -75,10 +107,12 @@ class AdminController extends Controller
     public function restoreAccount($id)
     {
         try {
-            User::withTrashed()->where('id', $id)->restore();
+            $user = User::withTrashed()->where('id', $id)->restore();
 
             return response()->json([
-                'message' => 'User restored'
+                'message' => 'User restored',
+                'success' => true,
+                'data' => $user
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error restoring user ' . $th->getMessage());
@@ -107,6 +141,7 @@ class AdminController extends Controller
                 'message' => "Group deleted successfully",
                 'success' => true,
                 'data' => $group
+
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error deleting group: ' . $th->getMessage());
@@ -120,10 +155,12 @@ class AdminController extends Controller
     public function restoreGroup($id)
     {
         try {
-            Group::withTrashed()->where('id', $id)->restore();
+            $group = Group::withTrashed()->where('id', $id)->restore();
 
             return response()->json([
-                'message' => 'Group restored'
+                'message' => 'Group restored',
+                'success' => true,
+                'data' => $group
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error restoring group ' . $th->getMessage());
