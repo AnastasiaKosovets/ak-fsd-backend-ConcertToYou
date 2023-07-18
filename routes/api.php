@@ -27,6 +27,7 @@ Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->middleware(
 Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
 Route::delete('/group/{id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
+Route::post('/group/{id}', [AdminController::class, 'restoreGroup'])->middleware('auth:sanctum', 'isAdmin');
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

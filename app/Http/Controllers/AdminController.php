@@ -72,12 +72,13 @@ class AdminController extends Controller
         }
     }
 
-    public function restoreAccount($id){
+    public function restoreAccount($id)
+    {
         try {
-            User::withTrashed()->where('id',$id)->restore();
+            User::withTrashed()->where('id', $id)->restore();
 
             return response()->json([
-                'message'=>'User restored'
+                'message' => 'User restored'
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error restoring user ' . $th->getMessage());
@@ -86,7 +87,6 @@ class AdminController extends Controller
                 'message' => 'Error restoring user'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 
     public function deleteGroup($id)
@@ -113,6 +113,23 @@ class AdminController extends Controller
 
             return response()->json([
                 'message' => 'Error deleting group'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function restoreGroup($id)
+    {
+        try {
+            Group::withTrashed()->where('id', $id)->restore();
+
+            return response()->json([
+                'message' => 'Group restored'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error restoring group ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error restoring group'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('genre');
             $table->text('description');
             $table->integer('musicsNumber');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +29,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('groups');
+        Schema::table('groups', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
     }
 };
