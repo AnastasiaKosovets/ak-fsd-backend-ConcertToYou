@@ -28,6 +28,24 @@ class AdminController extends Controller
         }
     }
 
+    public function getAllGroups()
+    {
+        try {
+            $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            return response()->json([
+                'message' => 'Groups retrieved',
+                'data' => $groups,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function deleteUser($id)
     {
         try {
@@ -69,5 +87,33 @@ class AdminController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function deleteGroup($id)
+    {
+        try {
+            $user = auth()->user();
+            $group = Group::find($id);
+
+            if (!$group) {
+                return response()->json([
+                    'message' => "Group with id {$id} not found or role_id is not 2"
+                ], Response::HTTP_NOT_IMPLEMENTED);
+            }
+
+            $group->delete();
+
+            return response()->json([
+                'message' => "Group deleted successfully",
+                'success' => true,
+                'data' => $group
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error deleting group: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error deleting group'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

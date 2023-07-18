@@ -15,7 +15,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 // USERS CONTROLLER
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
 Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
-// Route::get('/groupView', [UserController::class, 'viewAllGroups']);
 Route::get('/groups', [UserController::class, 'getAllGroups']);
 Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');;
@@ -25,8 +24,9 @@ Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middle
 // ADMIN CONTROLLER
 Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
 Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
-
+Route::delete('/group/{id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
