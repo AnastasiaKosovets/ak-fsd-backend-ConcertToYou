@@ -29,36 +29,36 @@ class AdminController extends Controller
     }
 
     public function getOneUser(Request $request)
-{
-    try {
-        $firstName = $request->input('firstName');
-        $lastName = $request->input('lastName');
+    {
+        try {
+            $firstName = $request->input('firstName');
+            $lastName = $request->input('lastName');
 
-        $query = User::query();
+            $query = User::query();
 
-        if ($firstName) {
-            $query->where('firstName', 'LIKE', "%{$firstName}%");
+            if ($firstName) {
+                $query->where('firstName', 'LIKE', "%{$firstName}%");
+            }
+
+            if ($lastName) {
+                $query->where('lastName', 'LIKE', "%{$lastName}%");
+            }
+
+            $user = $query->firstOrFail();
+
+            return response()->json([
+                'message' => 'User retrieved',
+                'data' => $user,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting user: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        if ($lastName) {
-            $query->where('lastName', 'LIKE', "%{$lastName}%");
-        }
-
-        $user = $query->firstOrFail();
-
-        return response()->json([
-            'message' => 'User retrieved',
-            'data' => $user,
-            'success' => true
-        ], Response::HTTP_OK);
-    } catch (\Throwable $th) {
-        Log::error('Error getting user: ' . $th->getMessage());
-
-        return response()->json([
-            'message' => 'Error retrieving user'
-        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-}
 
     public function getAllGroups()
     {

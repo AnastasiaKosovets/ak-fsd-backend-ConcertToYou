@@ -143,6 +143,24 @@ class UserController extends Controller
         }
     }
 
+    public function getGroupByGenre($genre){
+        try {
+            $groups = Group::where('genre', $genre)->get();
+
+            return response()->json([
+                'message' => 'Groups retrieved by genre',
+                'data' => $groups,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups by genre:' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups by genre'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function deleteMyAccount()
     {
 
