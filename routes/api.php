@@ -22,10 +22,10 @@ Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
 
-
 // ADMIN CONTROLLER
 Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
-Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

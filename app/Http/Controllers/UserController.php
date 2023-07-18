@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -39,9 +40,16 @@ class UserController extends Controller
             $id = $user->id;
             
             $validator = Validator::make($request->all(), [
-                'email' => 'nullable|string',
+                'email' => [
+                    'nullable',
+                    'email',
+                    Rule::unique('users')->ignore($id)
+                ],
                 'address' => 'nullable|string',
-                'phoneNumber' => 'nullable|integer',
+                'phoneNumber' => [
+                    'nullable',
+                    'regex:/^\d{9}$/',
+                ],
                 'role_id' => 'nullable'
             ]);
 

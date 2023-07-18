@@ -53,4 +53,21 @@ class AdminController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function restoreAccount($id){
+        try {
+            User::withTrashed()->where('id',$id)->restore();
+
+            return response()->json([
+                'message'=>'User restored'
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error restoring user ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error restoring user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
