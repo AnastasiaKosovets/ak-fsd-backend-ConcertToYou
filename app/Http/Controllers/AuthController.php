@@ -130,6 +130,7 @@ class AuthController extends Controller
 
             $validData = $validator->validated();
             $user = User::where('email', $validData['email'])->first();
+            
 
             if (!$user) {
                 return response()->json([
@@ -143,14 +144,17 @@ class AuthController extends Controller
                 ], Response::HTTP_FORBIDDEN);
             }
 
+            // $role_id = $user->role_id;
             $token = $user->createToken('apiToken')->plainTextToken;
+            
             return response()->json([
                 'message' => 'User logged',
-                'date' => $user,
+                'data' => $user,
+                // 'role_id' => $role_id,
                 'token' => $token
             ]);
         } catch (\Throwable $th) {
-            Log::error('Error getting tasks' . $th->getMessage());
+            Log::error('Error getting user' . $th->getMessage());
 
             return response()->json([
                 'message' => 'Error creating user'
