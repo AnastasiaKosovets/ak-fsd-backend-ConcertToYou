@@ -29,7 +29,8 @@ Route::put('/users', [AdminController::class, 'updateAdminProfile'])->middleware
 Route::delete('/user/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
 // allGroups dejarlo publico
 // Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
-Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
+// Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
+Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount']);
 Route::delete('/group/{id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/group/{id}', [AdminController::class, 'restoreGroup'])->middleware('auth:sanctum', 'isAdmin');
 // Search by ID

@@ -158,6 +158,9 @@ class AdminController extends Controller
     {
         try {
             $user = User::withTrashed()->where('id', $id)->restore();
+            
+            // $user = User::find($id);
+        //    dd($requestHeaders);
 
             return response()->json([
                 'message' => 'User restored',
