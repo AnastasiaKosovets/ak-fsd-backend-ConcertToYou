@@ -16,7 +16,6 @@ class Group extends Model
         'genre',
         'description',
         'musicsNumber',
-
     ];
     
     protected $casts = [

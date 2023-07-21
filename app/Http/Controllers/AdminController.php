@@ -176,15 +176,13 @@ class AdminController extends Controller
         }
     }
 
-    public function deleteGroup($id)
+    public function deleteGroup($group_id)
     {
         try {
-            $user = auth()->user();
-            $group = Group::find($id);
-
+            $group = Group::find($group_id);
             if (!$group) {
                 return response()->json([
-                    'message' => "Group with id {$id} not found or role_id is not 2"
+                    'message' => "Group with id {$group_id} not found or role_id is not 2"
                 ], Response::HTTP_NOT_IMPLEMENTED);
             }
 
