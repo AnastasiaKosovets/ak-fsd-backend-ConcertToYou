@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerGroup', [AuthController::class, 'registerGroup'])->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum', 'isAdmin');
 
 // USERS CONTROLLER
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
-Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
+// Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
+Route::put('/users', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
 Route::get('/groups', [UserController::class, 'getAllGroups']);
 Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 Route::get('/groups/genre/{genre}', [UserController::class, 'getGroupByGenre']);
@@ -24,7 +25,8 @@ Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middle
 
 // ADMIN CONTROLLER
 Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');
-Route::delete('/user/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
+Route::put('/users', [AdminController::class, 'updateAdminProfile'])->middleware('auth:sanctum', 'isAdmin');
+Route::delete('/user/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
 // allGroups dejarlo publico
 // Route::get('/groups', [UserController::class, 'getAllGroups'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/users/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');

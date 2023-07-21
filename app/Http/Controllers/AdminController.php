@@ -7,9 +7,59 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
+    public function updateAdminProfile(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            $id = $user->id;
+
+            $validator = Validator::make($request->all(), [
+                // 'email' => [
+                //     'nullable',
+                //     'email',
+                //     Rule::unique('users')->ignore($id)
+                // ],
+                'address' => 'nullable|string',
+                'phoneNumber' => [
+                    'nullable',
+                    'regex:/^\d{9}$/',
+                ],
+                'role_id' => 'nullable'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), Response::HTTP_BAD_REQUEST);
+            }
+
+            $validData = $validator->validated();
+
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(['message' => "User with id {$id} not found"], Response::HTTP_NOT_FOUND);
+            }
+
+            $user->update($validData);
+
+            return response()->json([
+                'message' => 'User updated successfully',
+                'data' => $user,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error updating user: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating user'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function getAllUsers()
     {
         try {
@@ -81,7 +131,7 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         try {
-            $user = auth()->user();
+            // $user = auth()->user();
             $user = User::find($id);
 
             if (!$user) {
