@@ -68,7 +68,8 @@ class AuthController extends Controller
                 'groupName' => 'required|string',
                 'genre' => 'required|string',
                 'description' => 'required|string',
-                'musicsNumber' => 'required|integer'
+                'musicsNumber' => 'required|integer',
+                'image' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -92,7 +93,9 @@ class AuthController extends Controller
             $user->role_id = $groupRole;
             $user->save();
             
+            $imageUrl = $request->input('image');
             $newGroup = Group::create([
+                'image' => $imageUrl,
                 'groupName' => $validData['groupName'],
                 'genre' => $validData['genre'],
                 'description' => $validData['description'],

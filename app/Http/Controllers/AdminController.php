@@ -113,7 +113,8 @@ class AdminController extends Controller
     public function getAllGroups()
     {
         try {
-            $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            $groups = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            dd($groups);
             return response()->json([
                 'message' => 'Groups retrieved',
                 'data' => $groups,
@@ -158,9 +159,8 @@ class AdminController extends Controller
     {
         try {
             $user = User::withTrashed()->where('id', $id)->restore();
-            
-            // $user = User::find($id);
-        //    dd($requestHeaders);
+
+            //    dd($requestHeaders);
 
             return response()->json([
                 'message' => 'User restored',
