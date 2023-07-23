@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('groupName');
             $table->string('description');
             $table->string('programm');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +31,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('concerts');
+        Schema::table('concerts', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
     }
 };
