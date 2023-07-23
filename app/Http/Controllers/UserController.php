@@ -33,18 +33,18 @@ class UserController extends Controller
         }
     }
 
-    public function updateMyProfile(Request $request, $id)
+    public function updateMyProfile(Request $request)
     {
         try {
             $user = auth()->user();
             $id = $user->id;
             
             $validator = Validator::make($request->all(), [
-                'email' => [
-                    'nullable',
-                    'email',
-                    Rule::unique('users')->ignore($id)
-                ],
+                // 'email' => [
+                //     'nullable',
+                //     'email',
+                //     Rule::unique('users')->ignore($id)
+                // ],
                 'address' => 'nullable|string',
                 'phoneNumber' => [
                     'nullable',
@@ -102,7 +102,7 @@ class UserController extends Controller
     public function getAllGroups()
     {
         try {
-            $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            $groups = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->get();
             return response()->json([
                 'message' => 'Groups retrieved',
                 'data' => $groups,

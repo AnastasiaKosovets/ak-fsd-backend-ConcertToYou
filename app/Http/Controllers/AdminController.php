@@ -203,10 +203,10 @@ class AdminController extends Controller
         }
     }
 
-    public function restoreGroup($id)
+    public function restoreGroup($group_id)
     {
         try {
-            $group = Group::withTrashed()->where('id', $id)->restore();
+            $group = Group::withTrashed()->where('id', $group_id)->restore();
 
             return response()->json([
                 'message' => 'Group restored',

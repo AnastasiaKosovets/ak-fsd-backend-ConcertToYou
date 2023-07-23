@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
                 'firstName' => 'Anastasia',
                 'lastName' => 'Kosovets',
                 'email' => 'anastasia@anastasia.com',
-                'password' => bcrypt('Anastasia1234'),
+                'password' => bcrypt('Anastasia1234!'),
                 'address' => 'C/Paterna, Valencia 46009',
                 'document' => '12345858A',
                 'dateOfBirth' => '15/05/1994',
@@ -177,6 +177,17 @@ class UserSeeder extends Seeder
                 'document' => '34567890G',
                 'dateOfBirth' => '07/09/1994',
                 'phoneNumber' => '701234567',
+                'role_id' => 1
+            ],
+            [
+                'firstName' => 'Edu',
+                'lastName' => 'Kiriakos',
+                'email' => 'eduardo@eduardo.com',
+                'password' => bcrypt('Eduardo1234!'),
+                'address' => 'Rua do Comércio 456, Lisboa 1200-178',
+                'document' => '34567890S',
+                'dateOfBirth' => '07/10/1994',
+                'phoneNumber' => '701544567',
                 'role_id' => 1
             ],
         ]);
