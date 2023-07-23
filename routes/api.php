@@ -44,4 +44,5 @@ Route::get('/user', [AdminController::class, 'getOneUser'])->middleware('auth:sa
 Route::get('/concerts', [ConcertController::class, 'getAllConcerts']);
 Route::delete('/concert/delete/{concert_id}', [ConcertController::class, 'deleteConcert'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/createConcert', [ConcertController::class, 'createConcert'])->middleware('auth:sanctum', 'isGroup');
+Route::post('/concert/restore/{concert_id}', [ConcertController::class, 'restoreConcert'])->middleware('auth:sanctum', 'isAdmin');
 

@@ -54,6 +54,25 @@ class ConcertController extends Controller
         }
     }
 
+    public function restoreConcert($concert_id)
+    {
+        try {
+            $concert = Concert::withTrashed()->where('id', $concert_id)->restore();
+
+            return response()->json([
+                'message' => 'Concert restored',
+                'success' => true,
+                'data' => $concert
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error restoring concert ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error restoring concert'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function createConcert(Request $request)
     {
         try {
