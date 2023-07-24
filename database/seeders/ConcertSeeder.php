@@ -27,7 +27,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 1,
-                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img22.jpg',
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img6.jpg',
                 'title' => 'Noche de Jazz',
                 'date' => '2023-09-15 20:00:00',
                 'groupName' => 'Quinteto de Viento Harmonía',
@@ -49,7 +49,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
-                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img25.jpg',
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img16.jpg',
                 'title' => 'Concierto de Otoño',
                 'date' => '2023-09-25 18:30:00',
                 'groupName' => 'Duo Melodía',
@@ -115,7 +115,7 @@ class ConcertSeeder extends Seeder
             ],
             [
                 'group_id' => 2,
-                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img27.jpg',
+                'image' => 'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img8.jpg',
                 'title' => 'Concierto de Navidad',
                 'date' => '2023-12-10 18:00:00',
                 'groupName' => 'Duo Melodía',

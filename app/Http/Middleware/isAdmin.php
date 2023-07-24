@@ -16,11 +16,13 @@ class isAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user_role = auth()->user()->role_id;
-        if($user_role !== 3){
+        if($user_role !== 3 ){
+
             return response()->json([
                 'message' => 'Not authorizated'
             ], Response::HTTP_UNAUTHORIZED);
         }
+
         return $next($request);
     }
 }

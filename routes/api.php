@@ -18,9 +18,10 @@ Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:san
 // Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
 Route::put('/user/profile', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
 Route::get('/groups', [UserController::class, 'getAllGroups']);
-Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
+// Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
+Route::get('/groups/myGroup', [UserController::class, 'getMyGroup'])->middleware('auth:sanctum', 'isGroup');
 Route::get('/groups/genre/{genre}', [UserController::class, 'getGroupByGenre']);
-Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');;
+Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
 
@@ -30,7 +31,9 @@ Route::put('/users', [AdminController::class, 'updateAdminProfile'])->middleware
 Route::delete('/user/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
 
 // Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
-Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount']);
+
+// restore user account
+Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
 
 Route::delete('/group/delete/{group_id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
 
@@ -42,7 +45,7 @@ Route::get('/user', [AdminController::class, 'getOneUser'])->middleware('auth:sa
 
 // CONCERT CONTROLLER
 Route::get('/concerts', [ConcertController::class, 'getAllConcerts']);
-Route::delete('/concert/delete/{concert_id}', [ConcertController::class, 'deleteConcert'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/createConcert', [ConcertController::class, 'createConcert'])->middleware('auth:sanctum', 'isGroup');
+Route::delete('/concert/delete/{concert_id}', [ConcertController::class, 'deleteConcert'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/concert/restore/{concert_id}', [ConcertController::class, 'restoreConcert'])->middleware('auth:sanctum', 'isAdmin');
 

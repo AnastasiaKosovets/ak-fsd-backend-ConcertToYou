@@ -57,8 +57,9 @@ class ConcertController extends Controller
     public function restoreConcert($concert_id)
     {
         try {
+            // $user_role = auth()->user()->role_id;
             $concert = Concert::withTrashed()->where('id', $concert_id)->restore();
-
+            // dd("----", $user_role);
             return response()->json([
                 'message' => 'Concert restored',
                 'success' => true,
