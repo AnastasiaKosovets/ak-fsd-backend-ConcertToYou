@@ -132,13 +132,14 @@ class ConcertController extends Controller
         try {
             $user_id = auth()->id();
             $group = Group::where('user_id', $user_id)->first();
+            // $group = Group::find($group_id);
 
             if (!$group) {
                 return response()->json([
                     'message' => 'User not associated with any concert'
                 ], Response::HTTP_NOT_FOUND);
             }
-            
+
             $concerts = Concert::where('group_id', $group->id)
                 ->select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')
                 ->get();
@@ -151,6 +152,37 @@ class ConcertController extends Controller
             ],
             'success' => true
         ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting concerts: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving concerts'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updateMyConcert(Request $request, $concert_id) {
+        try {
+            $concert = Concert::find($concert_id);
+
+            if(!$concert) {
+                return response()->json([
+                    'message' => 'Concert not found',
+                    'success' => false,
+                ], Response::HTTP_OK);
+            }
+
+            $request->validate([
+                'description' => 'required|string'
+            ]);
+
+            $concert->save();
+
+            return response()->json([
+                'message' => 'Concert updated successfully',
+                'success' => true,
+                'data' => $concert,
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error getting concerts: ' . $th->getMessage());
 

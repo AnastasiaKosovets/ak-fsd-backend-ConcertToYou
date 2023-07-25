@@ -50,3 +50,4 @@ Route::put('/update-my-group', [UserController::class, 'updateMyGroup'])->middle
 
 // CONCERT CONTROLLER
 Route::get('/groups/{group_id}/myConcerts', [ConcertController::class, 'getMyConcerts'])->middleware('auth:sanctum', 'isGroup');
+Route::put('/concerts/{concert_id}', [ConcertController::class, 'updateMyConcert'])->middleware('auth:sanctum', 'isGroup');
