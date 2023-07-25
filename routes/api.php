@@ -47,3 +47,6 @@ Route::get('/user', [AdminController::class, 'getOneUser'])->middleware('auth:sa
 Route::post('/createConcert', [ConcertController::class, 'createConcert'])->middleware('auth:sanctum', 'isGroup');
 Route::get('/groups/myGroup', [UserController::class, 'getMyGroup'])->middleware('auth:sanctum', 'isGroup');
 Route::put('/update-my-group', [UserController::class, 'updateMyGroup'])->middleware('auth:sanctum', 'isGroup');
+
+// CONCERT CONTROLLER
+Route::get('/groups/{group_id}/myConcerts', [ConcertController::class, 'getMyConcerts'])->middleware('auth:sanctum', 'isGroup');

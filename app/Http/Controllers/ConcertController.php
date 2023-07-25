@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Concert;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Log;
@@ -122,6 +123,39 @@ class ConcertController extends Controller
 
             return response()->json([
                 'message' => 'Error creating concert'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getMyConcerts()
+    {
+        try {
+            $user_id = auth()->id();
+            $group = Group::where('user_id', $user_id)->first();
+
+            if (!$group) {
+                return response()->json([
+                    'message' => 'User not associated with any concert'
+                ], Response::HTTP_NOT_FOUND);
+            }
+            
+            $concerts = Concert::where('group_id', $group->id)
+                ->select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')
+                ->get();
+
+            return response()->json([
+            'message' => 'Group retrieved',
+            'data' => [
+                'group' => $group,
+                'concerts' => $concerts
+            ],
+            'success' => true
+        ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting concerts: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving concerts'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
