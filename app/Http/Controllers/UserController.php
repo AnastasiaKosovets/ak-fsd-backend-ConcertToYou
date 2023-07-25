@@ -38,13 +38,8 @@ class UserController extends Controller
         try {
             $user = auth()->user();
             $id = $user->id;
-            
+
             $validator = Validator::make($request->all(), [
-                // 'email' => [
-                //     'nullable',
-                //     'email',
-                //     Rule::unique('users')->ignore($id)
-                // ],
                 'address' => 'nullable|string',
                 'phoneNumber' => [
                     'nullable',
@@ -77,112 +72,6 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'Error updating user'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // public function viewAllGroups()
-    // {
-    //     try {
-    //         $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
-    //         return response()->json([
-    //             'message' => 'Groups retrieved',
-    //             'data' => $groups,
-    //             'success' => true
-    //         ], Response::HTTP_OK);
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error getting groups' . $th->getMessage());
-
-    //         return response()->json([
-    //             'message' => 'Error retrieving groups'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
-
-    public function getAllGroups()
-    {
-        try {
-            $groups = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->get();
-            return response()->json([
-                'message' => 'Groups retrieved',
-                'data' => $groups,
-                'success' => true
-            ], Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            Log::error('Error getting groups' . $th->getMessage());
-
-            return response()->json([
-                'message' => 'Error retrieving groups'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    // public function getOneGroup($group_id)
-    // {
-    //     try {
-    //         $group = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->where('id', $group_id)->first();
-
-    //         if (!$group) {
-    //             return response()->json([
-    //                 'message' => 'Group not found'
-    //             ], Response::HTTP_NOT_FOUND);
-    //         }
-
-    //         return response()->json([
-    //             'message' => 'Group retrieved',
-    //             'data' => $group,
-    //             'success' => true
-    //         ], Response::HTTP_OK);
-    //         dd($group);
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error getting group: ' . $th->getMessage());
-
-    //         return response()->json([
-    //             'message' => 'Error retrieving group'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
-    public function getMyGroup()
-    {
-        try {
-            $user_id = auth()->id();
-            // Obtener el grupo asociado al user_id utilizando la relación definida en el modelo Group
-            $group = Group::where('user_id', $user_id)->first();
-    
-            if (!$group) {
-                return response()->json([
-                    'message' => 'User not associated with any group'
-                ], Response::HTTP_NOT_FOUND);
-            }
-    
-            return response()->json([
-                'message' => 'Group retrieved',
-                'data' => $group,
-                'success' => true
-            ], Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            Log::error('Error getting group: ' . $th->getMessage());
-    
-            return response()->json([
-                'message' => 'Error retrieving group'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public function getGroupByGenre($genre){
-        try {
-            $groups = Group::where('genre', $genre)->get();
-
-            return response()->json([
-                'message' => 'Groups retrieved by genre',
-                'data' => $groups,
-                'success' => true
-            ], Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            Log::error('Error getting groups by genre:' . $th->getMessage());
-
-            return response()->json([
-                'message' => 'Error retrieving groups by genre'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -265,6 +154,146 @@ class UserController extends Controller
 
             return response()->json([
                 'message' => 'Error booking your ticket'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getMyGroup()
+    {
+        try {
+            $user_id = auth()->id();
+            // Obtener el grupo asociado al user_id utilizando la relación definida en el modelo Group
+            $group = Group::where('user_id', $user_id)->first();
+
+            if (!$group) {
+                return response()->json([
+                    'message' => 'User not associated with any group'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return response()->json([
+                'message' => 'Group retrieved',
+                'data' => $group,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting group: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving group'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function updateMyGroup(Request $request)
+    {
+        try {
+            $user_id = auth()->id();
+            $group = Group::where('user_id', $user_id)->first();
+
+            if (!$group) {
+                return response()->json([
+                    'message' => 'User not associated with any group'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            $validatedData = $request->validate([
+                'description' => 'required|string',
+            ]);
+
+            $group->update($validatedData);
+
+            return response()->json([
+                'message' => 'Group data updated successfully',
+                'data' => $group,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error updating group: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating group'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    // public function viewAllGroups()
+    // {
+    //     try {
+    //         $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+    //         return response()->json([
+    //             'message' => 'Groups retrieved',
+    //             'data' => $groups,
+    //             'success' => true
+    //         ], Response::HTTP_OK);
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error getting groups' . $th->getMessage());
+
+    //         return response()->json([
+    //             'message' => 'Error retrieving groups'
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+    public function getAllGroups()
+    {
+        try {
+            $groups = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->get();
+            return response()->json([
+                'message' => 'Groups retrieved',
+                'data' => $groups,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // public function getOneGroup($group_id)
+    // {
+    //     try {
+    //         $group = Group::select('id', 'image', 'groupName', 'genre', 'description', 'musicsNumber')->where('id', $group_id)->first();
+
+    //         if (!$group) {
+    //             return response()->json([
+    //                 'message' => 'Group not found'
+    //             ], Response::HTTP_NOT_FOUND);
+    //         }
+
+    //         return response()->json([
+    //             'message' => 'Group retrieved',
+    //             'data' => $group,
+    //             'success' => true
+    //         ], Response::HTTP_OK);
+    //         dd($group);
+    //     } catch (\Throwable $th) {
+    //         Log::error('Error getting group: ' . $th->getMessage());
+
+    //         return response()->json([
+    //             'message' => 'Error retrieving group'
+    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+
+    public function getGroupByGenre($genre)
+    {
+        try {
+            $groups = Group::where('genre', $genre)->get();
+
+            return response()->json([
+                'message' => 'Groups retrieved by genre',
+                'data' => $groups,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups by genre:' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups by genre'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

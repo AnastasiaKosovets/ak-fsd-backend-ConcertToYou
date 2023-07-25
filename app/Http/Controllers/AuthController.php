@@ -64,6 +64,7 @@ class AuthController extends Controller
     public function registerGroup(Request $request)
     {
         try {
+            // $user_id = auth()->id();
             $validator = Validator::make($request->all(), [
                 'groupName' => 'required|string',
                 'genre' => 'required|string',
@@ -79,7 +80,7 @@ class AuthController extends Controller
             $validData = $validator->validated();
             $existing = Group::where('groupName', $validData['groupName'])->first();
 
-            $userId = auth()->user()->id;
+            $user_id = auth()->user()->id;
             $groupRole = 2;
             
             
@@ -89,7 +90,7 @@ class AuthController extends Controller
                 ]);
             }
 
-            $user = User::find($userId);
+            $user = User::find($user_id);
             $user->role_id = $groupRole;
             $user->save();
             
@@ -100,7 +101,7 @@ class AuthController extends Controller
                 'genre' => $validData['genre'],
                 'description' => $validData['description'],
                 'musicsNumber' => $validData['musicsNumber'],
-                'user_id' => $userId
+                'user_id' => $user_id
             ]);
 
             return response()->json([
@@ -147,13 +148,11 @@ class AuthController extends Controller
                 ], Response::HTTP_FORBIDDEN);
             }
 
-            // $role_id = $user->role_id;
             $token = $user->createToken('apiToken')->plainTextToken;
             
             return response()->json([
                 'message' => 'User logged',
                 'data' => $user,
-                // 'role_id' => $role_id,
                 'token' => $token
             ]);
         } catch (\Throwable $th) {

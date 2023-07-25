@@ -10,24 +10,25 @@ use Illuminate\Support\Facades\Validator;
 
 class ConcertController extends Controller
 {
-   public function getAllConcerts(){
-    try {
-        $concerts = Concert::select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')->get();
-        return response()->json([
-            'message' => 'Concerts retrieved',
-            'data' => $concerts,
-            'success' => true
-        ], Response::HTTP_OK);
-    } catch (\Throwable $th) {
-        Log::error('Error getting concert' . $th->getMessage());
+    public function getAllConcerts()
+    {
+        try {
+            $concerts = Concert::select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')->get();
+            return response()->json([
+                'message' => 'Concerts retrieved',
+                'data' => $concerts,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting concert' . $th->getMessage());
 
             return response()->json([
                 'message' => 'Error retrieving concerts'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
-   }
 
-   public function deleteConcert($concert_id)
+    public function deleteConcert($concert_id)
     {
         try {
             $concert = Concert::find($concert_id);
@@ -84,7 +85,7 @@ class ConcertController extends Controller
                 'date' => 'required|string',
                 'groupName' => 'required|string',
                 'description' => 'required|string',
-                'programm' => 'required|string', 
+                'programm' => 'required|string',
             ]);
 
             if ($validator->fails()) {
@@ -93,14 +94,14 @@ class ConcertController extends Controller
 
             $validData = $validator->validated();
             $existing = Concert::where('title', $validData['title'])->first();
-            
-            
+
+
             if ($existing) {
                 return response()->json([
                     'message' => 'Title already exist'
                 ]);
             }
-            
+
             $imageUrl = $request->input('image');
             $newConcert = Concert::create([
                 'group_id' => $validData['group_id'],
