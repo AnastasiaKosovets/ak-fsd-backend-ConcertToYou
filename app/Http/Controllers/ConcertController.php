@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Concert;
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -79,8 +80,8 @@ class ConcertController extends Controller
     public function createConcert(Request $request)
     {
         try {
+            $group_id = auth()->id();
             $validator = Validator::make($request->all(), [
-                'group_id' => 'required|integer',
                 'image' => 'required|string',
                 'title' => 'required|string',
                 'date' => 'required|string',
@@ -105,7 +106,7 @@ class ConcertController extends Controller
 
             $imageUrl = $request->input('image');
             $newConcert = Concert::create([
-                'group_id' => $validData['group_id'],
+                'group_id' => $group_id,
                 'image' => $imageUrl,
                 'title' => $validData['title'],
                 'date' => $validData['date'],
