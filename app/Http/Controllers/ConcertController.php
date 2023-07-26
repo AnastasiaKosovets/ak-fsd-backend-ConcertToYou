@@ -145,7 +145,7 @@ class ConcertController extends Controller
                 ->get();
 
             return response()->json([
-            'message' => 'Group retrieved',
+            'message' => 'Concerts retrieved',
             'data' => [
                 'group' => $group,
                 'concerts' => $concerts
@@ -175,7 +175,8 @@ class ConcertController extends Controller
             $request->validate([
                 'description' => 'required|string'
             ]);
-
+            Log::info('New description: ' . $request->description);
+            $concert->description = $request->description;
             $concert->save();
 
             return response()->json([
@@ -190,5 +191,37 @@ class ConcertController extends Controller
                 'message' => 'Error retrieving concerts'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function updateAdminConcert(Request $request, $concert_id){
+        try {
+            $concert = Concert::find($concert_id);
+
+            if(!$concert) {
+                return response()->json([
+                    'message' => 'Concert not found',
+                    'success' => false,
+                ], Response::HTTP_OK);
+            }
+
+            $request->validate([
+                'description' => 'required|string'
+            ]);
+            Log::info('New description: ' . $request->description);
+            $concert->description = $request->description;
+            $concert->save();
+
+            return response()->json([
+                'message' => 'Concert updated successfully',
+                'success' => true,
+                'data' => $concert,
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting concerts: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving concerts'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } 
     }
 }

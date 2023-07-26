@@ -129,10 +129,40 @@ class AdminController extends Controller
         }
     }
 
+    public function updateGroupAdmin(Request $request, $group_id)
+    {
+        try {
+            $group = Group::find($group_id);
+            if (!$group) {
+                return response()->json([
+                    'message' => 'Group not found',
+                    'success' => false,
+                ], Response::HTTP_NOT_FOUND);
+            }
+            $request->validate([
+                'description' => 'required|string'
+            ]);
+
+            $group->description = $request->input('description');
+            $group->save();
+
+            return response()->json([
+                'message' => 'Group updates successfully',
+                'data' => $group,
+                'success' => true,
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error updating group' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error updating group'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function deleteUser($id)
     {
         try {
-            // $user = auth()->user();
             $user = User::find($id);
 
             if (!$user) {
@@ -221,4 +251,5 @@ class AdminController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
 }

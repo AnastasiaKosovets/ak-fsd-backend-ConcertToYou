@@ -16,14 +16,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 Route::get('/groups', [UserController::class, 'getAllGroups']);
 Route::get('/groups/genre/{genre}', [UserController::class, 'getGroupByGenre']);
 Route::get('/concerts', [ConcertController::class, 'getAllConcerts']);
+// Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 
 // USERS CONTROLLER
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
 Route::post('/registerGroup', [AuthController::class, 'registerGroup'])->middleware('auth:sanctum');
-// Route::put('/users/{id}', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
 Route::put('/user/profile', [UserController::class, 'updateMyProfile'])->middleware('auth:sanctum');
-// Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
-
 Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
@@ -34,10 +32,12 @@ Route::put('/users', [AdminController::class, 'updateAdminProfile'])->middleware
 Route::delete('/user/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('auth:sanctum', 'isAdmin');
 // restore user account
 Route::post('/users/restore/{id}', [AdminController::class, 'restoreAccount'])->middleware('auth:sanctum', 'isAdmin');
+Route::put('/groups/admin/{id}', [AdminController::class, 'updateGroupAdmin'])->middleware('auth:sanctum', 'isAdmin');
 Route::delete('/group/delete/{group_id}', [AdminController::class, 'deleteGroup'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/group/restore/{group_id}', [AdminController::class, 'restoreGroup'])->middleware('auth:sanctum', 'isAdmin');
 Route::delete('/concert/delete/{concert_id}', [ConcertController::class, 'deleteConcert'])->middleware('auth:sanctum', 'isAdmin');
 Route::post('/concert/restore/{concert_id}', [ConcertController::class, 'restoreConcert'])->middleware('auth:sanctum', 'isAdmin');
+Route::put('/concerts/admin/{concert_id}', [ConcertController::class, 'updateAdminConcert'])->middleware('auth:sanctum', 'isAdmin');
 // Search by ID
 Route::get('/user/{id}', [AdminController::class, 'getOneUser'])->middleware('auth:sanctum', 'isAdmin');
 // Search by Name and Surname
