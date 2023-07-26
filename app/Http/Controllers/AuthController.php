@@ -149,14 +149,14 @@ class AuthController extends Controller
             }
 
             $token = $user->createToken('apiToken')->plainTextToken;
-            $group = $user->group;
-            $group_id = $group ? $group->id : null;
+            // $group = $user->group;
+            // $group_id = $group ? $group->id : null;
             
             return response()->json([
                 'message' => 'User logged',
                 'data' => $user,
                 'token' => $token,
-                'group_id' => $group_id,
+                // 'group_id' => $group_id,
             ]);
         } catch (\Throwable $th) {
             Log::error('Error getting user' . $th->getMessage());
