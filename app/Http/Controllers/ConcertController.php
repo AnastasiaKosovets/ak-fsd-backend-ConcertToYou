@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Concert;
 use App\Models\Group;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,9 @@ class ConcertController extends Controller
     {
         try {
             $concerts = Concert::select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')->get();
+            foreach ($concerts as $concert) {
+                $concert->date = Carbon::parse($concert->date)->format('d/m/Y H:i');
+            }
             return response()->json([
                 'message' => 'Concerts retrieved',
                 'data' => $concerts,
