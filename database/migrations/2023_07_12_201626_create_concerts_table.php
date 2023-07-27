@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('concerts', function (Blueprint $table) {
@@ -14,7 +17,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups');
             $table->string('image');
             $table->string('title');
-            $table->dateTime('date');
+            $table->date('date');
             $table->string('groupName');
             $table->string('description');
             $table->string('programm');
@@ -23,6 +26,9 @@ return new class extends Migration
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::table('concerts', function (Blueprint $table) {

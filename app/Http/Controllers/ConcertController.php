@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Concert;
 use App\Models\Group;
 use Carbon\Carbon;
+use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +19,7 @@ class ConcertController extends Controller
     {
         try {
             $concerts = Concert::select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')->get();
-            foreach ($concerts as $concert) {
-                $concert->date = Carbon::parse($concert->date)->format('d/m/Y H:i');
-            }
+
             return response()->json([
                 'message' => 'Concerts retrieved',
                 'data' => $concerts,
@@ -33,6 +33,7 @@ class ConcertController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
 
     public function deleteConcert($concert_id)
     {
@@ -110,11 +111,17 @@ class ConcertController extends Controller
             }
 
             $imageUrl = $request->input('image');
+            $dateString = $validData['date'];
+            $timestamp = strtotime($dateString);
+            if ($timestamp === false) {
+                throw new Exception('Invalid date format: ' . $dateString);
+            }
+            $formattedDate = date('Y-m-d H:i:s', $timestamp);
             $newConcert = Concert::create([
                 'group_id' => $group_id,
                 'image' => $imageUrl,
                 'title' => $validData['title'],
-                'date' => $validData['date'],
+                'date' => $formattedDate,
                 'groupName' => $validData['groupName'],
                 'description' => $validData['description'],
                 'programm' => $validData['programm'],
@@ -224,6 +231,31 @@ class ConcertController extends Controller
 
             return response()->json([
                 'message' => 'Error retrieving concerts'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getConcertByGroupName(Request $request){
+        try {
+            $groupName = $request->input('groupName');
+            $query = Concert::query();
+
+            if ($groupName) {
+                $query->where('groupName', 'LIKE', "%{$groupName}%");
+            }
+
+            $concert = $query->get();
+
+            return response()->json([
+                'message' => 'Concert retrieved by group name',
+                'data' => $concert,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Error getting groups by genre:' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error retrieving groups by genre'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
