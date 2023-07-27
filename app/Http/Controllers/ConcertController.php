@@ -80,7 +80,8 @@ class ConcertController extends Controller
     public function createConcert(Request $request)
     {
         try {
-            $group_id = auth()->id();
+            $user = auth()->user();
+            $group_id = $user->group->id;
             $validator = Validator::make($request->all(), [
                 'image' => 'required|string',
                 'title' => 'required|string',
@@ -131,42 +132,38 @@ class ConcertController extends Controller
     public function getMyConcerts()
     {
         try {
-            $user_id = auth()->id();
-            $group = Group::where('user_id', $user_id)->first();
-            // $group = Group::find($group_id);
+            $user = auth()->user();
 
-            if (!$group) {
+            if (!$user->group) {
                 return response()->json([
-                    'message' => 'User not associated with any concert'
+                    'message' => 'El usuario no está asociado con ningún grupo de conciertos'
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            $concerts = Concert::where('group_id', $group->id)
-                ->select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')
-                ->get();
+            $concerts = $user->group->concerts()->select('id', 'image', 'title', 'date', 'groupName', 'description', 'programm')->get();
 
             return response()->json([
-            'message' => 'Concerts retrieved',
-            'data' => [
-                'group' => $group,
-                'concerts' => $concerts
-            ],
-            'success' => true
-        ], Response::HTTP_OK);
+                'message' => 'Conciertos obtenidos correctamente',
+                'data' => [
+                    'concerts' => $concerts
+                ],
+                'success' => true
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
-            Log::error('Error getting concerts: ' . $th->getMessage());
+            Log::error('Error al obtener los conciertos: ' . $th->getMessage());
 
             return response()->json([
-                'message' => 'Error retrieving concerts'
+                'message' => 'Error al obtener los conciertos'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function updateMyConcert(Request $request, $concert_id) {
+    public function updateMyConcert(Request $request, $concert_id)
+    {
         try {
             $concert = Concert::find($concert_id);
 
-            if(!$concert) {
+            if (!$concert) {
                 return response()->json([
                     'message' => 'Concert not found',
                     'success' => false,
@@ -194,11 +191,12 @@ class ConcertController extends Controller
         }
     }
 
-    public function updateAdminConcert(Request $request, $concert_id){
+    public function updateAdminConcert(Request $request, $concert_id)
+    {
         try {
             $concert = Concert::find($concert_id);
 
-            if(!$concert) {
+            if (!$concert) {
                 return response()->json([
                     'message' => 'Concert not found',
                     'success' => false,
@@ -223,6 +221,6 @@ class ConcertController extends Controller
             return response()->json([
                 'message' => 'Error retrieving concerts'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        } 
+        }
     }
 }

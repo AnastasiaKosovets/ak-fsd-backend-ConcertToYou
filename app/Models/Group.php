@@ -29,5 +29,9 @@ class Group extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function concerts(){
+        return $this->hasMany(Concert::class);
+    }
 }
 
