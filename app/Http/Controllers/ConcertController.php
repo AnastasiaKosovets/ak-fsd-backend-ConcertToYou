@@ -235,7 +235,8 @@ class ConcertController extends Controller
         }
     }
 
-    public function getConcertByGroupName(Request $request){
+    public function getConcertByGroupName(Request $request)
+    {
         try {
             $groupName = $request->input('groupName');
             $title = $request->input('title');
@@ -249,14 +250,14 @@ class ConcertController extends Controller
                 $query->where('title', 'LIKE', "%{$title}%");
             }
 
-            $query->where(function ($query) use ($groupName, $title){
-                if ($groupName && $title){
+            $query->where(function ($query) use ($groupName, $title) {
+                if ($groupName && $title) {
                     $query->where('groupName', 'LIKE', "%{$groupName}%")
-                    ->where('title', 'LIKE', "%{$title}%");
+                        ->where('title', 'LIKE', "%{$title}%");
                 }
             });
             $concerts = $query->get();
-// dd($concerts);
+            // dd($concerts);
             return response()->json([
                 'message' => 'Concert retrieved by group name',
                 'data' => $concerts,

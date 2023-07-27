@@ -17,7 +17,6 @@ Route::get('/groups', [UserController::class, 'getAllGroups']);
 Route::get('/groups/genre/{genre}', [UserController::class, 'getGroupByGenre']);
 Route::get('/concerts', [ConcertController::class, 'getAllConcerts']);
 Route::get('/concerts/groupName', [ConcertController::class, 'getConcertByGroupName']);
-// Route::get('/groups/{group_id}', [UserController::class, 'getOneGroup']);
 
 // USERS CONTROLLER
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth:sanctum');
