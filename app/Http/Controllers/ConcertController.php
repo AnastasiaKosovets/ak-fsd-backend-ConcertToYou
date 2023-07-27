@@ -238,17 +238,28 @@ class ConcertController extends Controller
     public function getConcertByGroupName(Request $request){
         try {
             $groupName = $request->input('groupName');
+            $title = $request->input('title');
             $query = Concert::query();
 
             if ($groupName) {
                 $query->where('groupName', 'LIKE', "%{$groupName}%");
             }
 
-            $concert = $query->get();
+            if ($title) {
+                $query->where('title', 'LIKE', "%{$title}%");
+            }
 
+            $query->where(function ($query) use ($groupName, $title){
+                if ($groupName && $title){
+                    $query->where('groupName', 'LIKE', "%{$groupName}%")
+                    ->where('title', 'LIKE', "%{$title}%");
+                }
+            });
+            $concerts = $query->get();
+// dd($concerts);
             return response()->json([
                 'message' => 'Concert retrieved by group name',
-                'data' => $concert,
+                'data' => $concerts,
                 'success' => true
             ], Response::HTTP_OK);
         } catch (\Throwable $th) {
