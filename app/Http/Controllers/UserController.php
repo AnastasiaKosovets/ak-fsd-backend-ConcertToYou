@@ -134,6 +134,18 @@ class UserController extends Controller
         try {
             $user_id = auth()->user()->id;
             $concert_id = $request->input('concert_id');
+
+            $alreadyInFavorite = Booking::where('user_id', $user_id)
+            ->where('concert_id', $concert_id)
+            ->where('favorite', true)
+            ->exists();
+
+            if($alreadyInFavorite) {
+                return response()->json([
+                    'message' => 'Concert is already in your favorites',
+                    'success' => false
+                ], Response::HTTP_OK);
+            }
             $booking = new Booking();
             $booking->user_id = $user_id;
             $booking->concert_id = $concert_id;
