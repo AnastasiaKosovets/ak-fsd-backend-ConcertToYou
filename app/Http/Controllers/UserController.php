@@ -168,6 +168,31 @@ class UserController extends Controller
         }
     }
 
+    public function getMyFavorites()
+    {
+        try {
+            $user_id = auth()->user()->id;
+            $favorites = Booking::where('user_id', $user_id)
+            ->where(function ($query) {
+                $query->where('favorite', true);
+            })->with('concert:id,title,date,groupName,programm', 'user:id')
+            ->get();
+
+
+            return response()->json([
+                'message' => 'Favorites retrieved',
+                'data' => $favorites,
+                'success' => true
+            ]);
+        } catch (\Throwable $th) {
+            Log::error('Error getting your favorites: ' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Error getting your favorites'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function getMyTickets()
     {
         try {
