@@ -25,6 +25,7 @@ Route::put('/user/profile', [UserController::class, 'updateMyProfile'])->middlew
 Route::get('/my-tickets', [UserController::class, 'getMyTickets'])->middleware('auth:sanctum');
 Route::delete('/users/delete', [UserController::class, 'deleteMyAccount'])->middleware('auth:sanctum');
 Route::post('/confirm-ticket', [UserController::class, 'confirmTicket'])->middleware('auth:sanctum');
+Route::post('/my-favorite', [UserController::class, 'myFavorite'])->middleware('auth:sanctum');
 
 // ADMIN CONTROLLER
 Route::get('/users', [AdminController::class, 'getAllUsers'])->middleware('auth:sanctum', 'isAdmin');

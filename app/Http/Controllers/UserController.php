@@ -120,12 +120,38 @@ class UserController extends Controller
                 'message' => 'Book ticket done',
                 'data' => $booking,
                 'success' => true
-            ]);
+            ], Response::HTTP_OK);
         } catch (\Throwable $th) {
             Log::error('Error booking your ticket: ' . $th->getMessage());
 
             return response()->json([
                 'message' => 'Error booking your ticket'
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function myFavorite(Request $request){
+        try {
+            $user_id = auth()->user()->id;
+            $concert_id = $request->input('concert_id');
+            $booking = new Booking();
+            $booking->user_id = $user_id;
+            $booking->concert_id = $concert_id;
+            $booking->favorite = true;
+
+            $booking->save();
+            $booking->load('concert:id,title,date,groupName,programm', 'user:id');
+
+            return response()->json([
+                'message' => 'Added in your favorite',
+                'data' => $booking,
+                'success' => true
+            ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            Log::error('Can not add to favorites:' . $th->getMessage());
+
+            return response()->json([
+                'message' => 'Can not add to favorites'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -216,23 +242,6 @@ class UserController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    // public function viewAllGroups()
-    // {
-    //     try {
-    //         $groups = Group::select('id', 'groupName', 'genre', 'description', 'musicsNumber')->get();
-    //         return response()->json([
-    //             'message' => 'Groups retrieved',
-    //             'data' => $groups,
-    //             'success' => true
-    //         ], Response::HTTP_OK);
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error getting groups' . $th->getMessage());
-
-    //         return response()->json([
-    //             'message' => 'Error retrieving groups'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
 
     public function getAllGroups()
     {
