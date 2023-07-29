@@ -40,7 +40,7 @@ class GroupSeeder extends Seeder
             ],
             [
                 'user_id' => 4,
-                'image' =>'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img35.jpg',
+                'image' =>'https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/img29.jpg',
                 'groupName' => 'Jazz Quartet Fusion',
                 'genre' => 'jazz',
                 'description' => 'Permítanos presentarles al Jazz Quartet Fusion, un grupo musical que combina la improvisación del jazz con elementos de otros géneros musicales. Nuestro cuarteto está compuesto por músicos talentosos y apasionados en piano, saxofón, contrabajo y batería, creando juntos un sonido único y envolvente. Sumérgete en la rica historia del jazz mientras exploramos diversos estilos, desde el swing clásico hasta el jazz contemporáneo y la fusión. Nuestras interpretaciones están llenas de ritmo, armonía sofisticada y solos vibrantes, que te transportarán a un viaje musical emocionante.',
