@@ -190,13 +190,15 @@ Without login you can:
             "programm": "Programm",
         }
         ```
-</details>
-
+    
 Also can:
 
     -   Get my concerts
     -   Get my group
     -   Update my group
+    
+</details>
+
 
 <details>
 
