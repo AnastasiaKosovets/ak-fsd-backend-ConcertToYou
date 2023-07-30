@@ -137,7 +137,7 @@ class AdminController extends Controller
             $request->validate([
                 'description' => 'required|string'
             ]);
-
+            Log::info('New description: ' . $request->description);
             $group->description = $request->input('description');
             $group->save();
 
