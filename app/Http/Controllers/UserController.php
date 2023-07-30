@@ -225,7 +225,6 @@ class UserController extends Controller
     {
         try {
             $user_id = auth()->id();
-            // Obtener el grupo asociado al user_id utilizando la relación definida en el modelo Group
             $group = Group::where('user_id', $user_id)->first();
 
             if (!$group) {

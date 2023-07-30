@@ -19,11 +19,6 @@ class AdminController extends Controller
             $id = $user->id;
 
             $validator = Validator::make($request->all(), [
-                // 'email' => [
-                //     'nullable',
-                //     'email',
-                //     Rule::unique('users')->ignore($id)
-                // ],
                 'address' => 'nullable|string',
                 'phoneNumber' => [
                     'nullable',
@@ -189,8 +184,6 @@ class AdminController extends Controller
     {
         try {
             $user = User::withTrashed()->where('id', $id)->restore();
-
-            //    dd($requestHeaders);
 
             return response()->json([
                 'message' => 'User restored',

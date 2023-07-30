@@ -64,7 +64,6 @@ class AuthController extends Controller
     public function registerGroup(Request $request)
     {
         try {
-            // $user_id = auth()->id();
             $validator = Validator::make($request->all(), [
                 'groupName' => 'required|string',
                 'genre' => 'required|string',
@@ -149,14 +148,11 @@ class AuthController extends Controller
             }
 
             $token = $user->createToken('apiToken')->plainTextToken;
-            // $group = $user->group;
-            // $group_id = $group ? $group->id : null;
             
             return response()->json([
                 'message' => 'User logged',
                 'data' => $user,
                 'token' => $token,
-                // 'group_id' => $group_id,
             ]);
         } catch (\Throwable $th) {
             Log::error('Error getting user' . $th->getMessage());
@@ -166,24 +162,6 @@ class AuthController extends Controller
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-
-    // public function profile(){
-    //     try {
-    //         $user = auth()->user();
-
-    //         return response()->json([
-    //             'message' => 'Perfil recuperado',
-    //             'data' => $user,
-    //             'success' => true
-    //         ], Response::HTTP_FORBIDDEN);
-    //     } catch (\Throwable $th) {
-    //         Log::error('Error getting tasks' . $th->getMessage());
-
-    //         return response()->json([
-    //             'message' => 'Error getting profile'
-    //         ], Response::HTTP_INTERNAL_SERVER_ERROR);
-    //     }
-    // }
 
     public function logout(Request $request)
     {
