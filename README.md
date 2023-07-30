@@ -8,9 +8,8 @@
   <summary>Index</summary>
   <ol>
     <li><a href="#about-the-project">About the project</a></li>
-    <li><a href="#deploy">Deploy</a></li>
     <li><a href="#stack">Stack</a></li>
-    <li><a href="#diagram-bd">Diagram DB</a></li>
+    <li><a href="#diagram">Diagram</a></li>
     <li><a href="#local-installation">Local installation</a></li>
     <li><a href="#process">Process</a></li>
     <li><a href="#project-structure">Project structure</a></li>
@@ -55,7 +54,7 @@ As an admin you will have access to all the management in order to have the best
     </a>
 </div>
 
-## Diagram DB
+## Diagram
 
 ![BBDD](https://s3-pruebanastia.s3.eu-west-3.amazonaws.com/BBDD.png)
 
@@ -242,7 +241,7 @@ Also admin can:
 
 As future features I would like to develop the user interface in more depth, having more options for managing personal data, in addition to the collaborations and to be able to introduce real sale of tickets, are some examples of the general idea.     
 
-## Licence
+## License
 This project is belonging to license Creative Commons Legal Code.
 
 ## Webgraphy
@@ -251,7 +250,7 @@ To achieve the goal we have collected information from:
 -	[Laravel Documentation](https://laravel.com/docs/10.x)
 
 
-## Gratitude
+## Gratitudes
 I thank my teachers for their time dedicated to this project:
 
 - ***Dani***  
