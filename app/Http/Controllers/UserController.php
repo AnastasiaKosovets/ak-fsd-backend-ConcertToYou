@@ -197,19 +197,21 @@ class UserController extends Controller
     {
         try {
             $user_id = auth()->user()->id;
-            $bookings = Booking::where('user_id', $user_id)->get();
+            $confirmations = Booking::where('user_id', $user_id)
+            ->where(function ($query) {
+                $query->where('confirmation', true);
+            })->with('concert:id,title,date,groupName', 'user:id,firstName,lastName')
+            ->get();
 
-            if ($bookings->isEmpty()) {
+            if ($confirmations->isEmpty()) {
                 return response()->json([
                     'message' => 'No reservation found'
                 ]);
             }
 
-            $bookings->load('concert:id,title,date,groupName', 'user:id,firstName,lastName');
-
             return response()->json([
                 'message' => 'Reservations retrieved',
-                'data' => $bookings,
+                'data' => $confirmations,
                 'success' => true
             ]);
         } catch (\Throwable $th) {

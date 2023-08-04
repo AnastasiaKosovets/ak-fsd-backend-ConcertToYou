@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('groups');
             $table->string('image');
             $table->string('title');
-            $table->date('date');
+            $table->dateTime('date');
             $table->string('groupName');
             $table->string('description');
             $table->string('programm');
